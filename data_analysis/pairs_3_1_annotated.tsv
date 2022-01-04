@@ -31,10 +31,10 @@ phosphorus	blooms	2	1	unknown
 disease	swollen_glands	7	3	unknown
 earthquake	surface_faulting	2	1	right
 bankruptcy	losses	13	12	unknown
-conflicts	division	2	1	TBD
-material	mesothelioma	2	1	TBD
-anger	difficulties	5	2	TBD
-energy	matter	4	3	TBD
+conflicts	division	2	1	unknown
+material	mesothelioma	2	1	unknown
+anger	difficulties	5	2	unknown
+energy	matter	4	3	unknown
 diarrhea	abdominal_pain	17	7	TBD
 whooping_cough	symptoms	3	2	TBD
 urinary_tract_infections	kidney_stones	2	1	TBD
