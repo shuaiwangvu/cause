@@ -14,8 +14,8 @@ tension	back_pain	9	1	right
 liver_disease	cancer	11	2	right
 obstructive_sleep_apnea	obstruction	3	1	unrelated
 malnutrition	pneumonia	6	1	unknown
-climate_change	extreme_weather	66	1	true
-aging	cognitive_impairment	18	1	true
+climate_change	extreme_weather	66	1	right
+aging	cognitive_impairment	18	1	right
 bronchiectasis	measles	3	1	unknown
 events	disaster	29	1	unrelated
 sunburn	damage_to_the_skin	3	1	right
