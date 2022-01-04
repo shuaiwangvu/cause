@@ -132,6 +132,20 @@ for scc in sccs_two:
 
 print ('There are in total ', len (sccs_two), ' cycles with two nodes')
 
+filtered = list(filter(lambda score: score >= 20, weight_proportion))
+print ('\n>= 20', len (filtered))
+print (' proportion: {:6.2f}%'.format(100*len(filtered)/len(weight_proportion)))
+
+filtered = list(filter(lambda score: score >= 10, weight_proportion))
+print ('\n>= 10', len (filtered))
+print (' proportion: {:6.2f}%'.format(100*len(filtered)/len(weight_proportion)))
+
+
+filtered = list(filter(lambda score: score >= 5, weight_proportion))
+print ('\n>= 5', len (filtered))
+print (' proportion: {:6.2f}%'.format(100*len(filtered)/len(weight_proportion)))
+
+
 filtered = list(filter(lambda score: score >= 3, weight_proportion))
 print ('\n>= 3', len (filtered))
 print (' proportion: {:6.2f}%'.format(100*len(filtered)/len(weight_proportion)))
@@ -163,11 +177,21 @@ axs[1].set_ylabel('frequency')
 plt.savefig('weight_statistics.png', bbox_inches='tight', dpi = 300)
 
 
-# >= 3 32810
-#  proportion:  42.24%
-# 1 < x <3 22246
-#  proportion:  28.64%
-# 1 == x 22628
-#  proportion:  29.13%
+
+# >= 20 2419
+#  proportion:   5.12%
+#
+# >= 10 5058
+#  proportion:  10.70%
+#
+# >= 5 10147
+#  proportion:  21.47%
+#
+# >= 3 16405
+#  proportion:  34.71%
+# 1 < x <3 11123
+#  proportion:  23.53%
+# 1 == x 19738
+#  proportion:  41.76%
 #  x < 1  0
 #  proportion:   0.00%
