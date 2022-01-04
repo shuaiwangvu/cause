@@ -121,7 +121,7 @@ for scc in sccs_two:
 	nu = w_big / w_small
 	if nu >= 3:
 		ge_three.write(str(s)+'\t'+ str(o) +'\t'+ str(w_s_t)+ '\t'+ str(w_t_s)+ '\tTBD\n')
-	elif nu < 3 and nu >0:
+	elif nu < 3 and nu > 1:
 		between_three_one.write(str(s)+'\t'+ str(o) +'\t'+ str(w_s_t)+ '\t'+ str(w_t_s) + '\tTBD\n')
 	elif nu <= 1:
 		eq_one.write(str(s)+'\t'+ str(o) +'\t'+ str(w_s_t)+ '\t'+ str(w_t_s) + '\tTBD\n')
