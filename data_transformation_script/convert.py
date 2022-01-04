@@ -32,30 +32,30 @@ ct_scc = Counter()
 count_0 = 0
 count = 0
 # with open('causenet-full.jsonl', 'r') as json_file:
-# with open( "causenet-full.tsv", 'w') as output:
-# 	writer = csv.writer(output, delimiter='\t')
-# 	with open('causenet-precision.jsonl', 'r') as json_file:
-# 		json_list = list(json_file)
-# 		g = nx.DiGraph()
-# 		for json_str in json_list:
-# 			count += 1
-# 			print ('processing ', count)
-# 			# if count % 1000 == 0:
-# 			# 	# print ('Loaded: ', count)
-# 			# 	break
-# 			result = json.loads(json_str)
-# 			# print(f"result: {result}")
-# 			# print(isinstance(result, dict))
-# 			s = result['causal_relation']['cause']['concept']
-# 			o = result['causal_relation']['effect']['concept']
-# 			num_sources = len(result['sources'])
-# 			# print('#sources = weight: ', num_sources)
-#
-# 			g.add_edge(s, o)
-# 			# print('\ncause = ', s)
-# 			# print('effect = ', o)
-# 			if '\0' not in s and '\0' not in o:
-# 				writer.writerow([s, o, num_sources])
+with open( "causenet-full.tsv", 'w') as output:
+	writer = csv.writer(output, delimiter='\t')
+	with open('causenet-precision.jsonl', 'r') as json_file:
+		json_list = list(json_file)
+		g = nx.DiGraph()
+		for json_str in json_list:
+			count += 1
+			print ('processing ', count)
+			# if count % 1000 == 0:
+			# 	# print ('Loaded: ', count)
+			# 	break
+			result = json.loads(json_str)
+			# print(f"result: {result}")
+			# print(isinstance(result, dict))
+			s = result['causal_relation']['cause']['concept']
+			o = result['causal_relation']['effect']['concept']
+			num_sources = len(result['sources'])
+			# print('#sources = weight: ', num_sources)
+
+			g.add_edge(s, o)
+			# print('\ncause = ', s)
+			# print('effect = ', o)
+			if '\0' not in s and '\0' not in o:
+				writer.writerow([s, o, num_sources])
 #
 #
 # print ('The graph has ', g.number_of_nodes(), ' nodes')
@@ -82,6 +82,9 @@ with open('causenet-full.tsv','r') as f:
 				if '\0' not in s and '\0' not in o:
 					writer.writerow([s, o, w])
 print ('found ', count_0, ' lines with NUL')
+
+
+
 #
 # for sc in ct_sources.keys():
 # 	print ('source ', sc, ' appears ', ct_sources[sc], ' times')
