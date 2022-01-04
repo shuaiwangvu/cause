@@ -29,6 +29,7 @@ import csv
 ct_sources = Counter()
 ct_weight = Counter()
 ct_scc = Counter()
+count_0 = 0
 count = 0
 # with open('causenet-full.jsonl', 'r') as json_file:
 # with open( "causenet-full.tsv", 'w') as output:
@@ -80,7 +81,7 @@ with open('causenet-full.tsv','r') as f:
 				w = int(row[2])
 				if '\0' not in s and '\0' not in o:
 					writer.writerow([s, o, w])
-
+print ('found ', count_0, ' lines with NUL')
 #
 # for sc in ct_sources.keys():
 # 	print ('source ', sc, ' appears ', ct_sources[sc], ' times')
