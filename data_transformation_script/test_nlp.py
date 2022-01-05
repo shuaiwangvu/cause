@@ -37,19 +37,20 @@ def mylem (s):
 		s_lem = lemmatizer.lemmatize(s)
 	return s_lem
 
-def mystem (s):
+# def mystem (s):
+#
+# 	s_lem = ''
+# 	if '_' in s:
+# 		splited = s.split('_')
+# 		strings = list(map (lancaster.stem, splited))
+# 		s_lem = '_'.join(strings)
+# 		# print (s, s_lem)
+# 	else:
+# 		s_lem = lancaster.stem(s)
+# 	return s_lem
 
-	s_lem = ''
-	if '_' in s:
-		splited = s.split('_')
-		strings = list(map (lancaster.stem, splited))
-		s_lem = '_'.join(strings)
-		# print (s, s_lem)
-	else:
-		s_lem = lancaster.stem(s)
-	return s_lem
-
-
+print('understanding_of_“_music : ', mylem("understanding_of_“_music"))
+# print('understanding_of_“_music : ', mystem("understanding_of_“_music"))
 count = 0
 with open(filename,'r') as f:
 	# with open( "causenet-full-without-NUL.tsv", 'w') as output:

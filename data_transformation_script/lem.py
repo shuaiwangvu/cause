@@ -76,8 +76,9 @@ with open('causenet-full-without-NUL.tsv','r') as f:
 
 					map_edge_to_sum_weight[(s_lem, o_lem)] += w
 
-		for (s_lemed, o_lemed) in f.readlines():
-			writer.writerow([s_lemed, o_lemed, map_edge_to_sum_weight[(s_lemed, o_lemed)]])
+		for (s_lemed, o_lemed) in map_edge_to_sum_weight:
+			w_lemed = map_edge_to_sum_weight[(s_lemed, o_lemed)]
+			writer.writerow([s_lemed, o_lemed, w_lemed])
 
 print ('found ', count_0, ' lines with NUL')
 print ('found ', len(mapping.keys()), 'merged nodes from ', len (mapping.values()), ' original nodes')

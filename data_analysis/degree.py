@@ -16,8 +16,9 @@ g = nx.DiGraph()
 count_0 = 0
 count = 0
 weight_proportion = []
-filename_causenet_tsv = 'causenet-full-without-NUL.tsv'
-
+# filename_causenet_tsv = 'causenet-full-without-NUL.tsv'
+filename_causenet_tsv = 'causenet-full-without-NUL-lem.tsv'
+#
 with open(filename_causenet_tsv,'r') as f:
 	for line in f.readlines():
 		count += 1
@@ -32,7 +33,7 @@ with open(filename_causenet_tsv,'r') as f:
 			row = line.split('\t')
 			s = row[0]
 			o = row[1]
-			w = int(row[2])
+			# w = int(row[2])
 			# edge_to_weight[(s,o)] = w
 			if s!=o:
 				g.add_edge(s, o)
@@ -56,7 +57,8 @@ for m in max_in_sorted[:50]:
 print ('death neighbors: ', list(g.neighbors('death'))[:50])
 print ('stress neighbors: ', list(g.neighbors('stress'))[:50])
 
-
+# before Lem:
+# ============================================================
 # The graph has  12186021  nodes
 # The graph has  11606999  edges
 # -------------DEGREE-------------
@@ -164,3 +166,116 @@ print ('stress neighbors: ', list(g.neighbors('stress'))[:50])
 # node =  mortality  in-degree  5236  out-degree  570
 # death neighbors:  ['grief', 'pain', 'loss', 'sadness', 'life', 'depression', 'losses', 'sorrow', 'financial_loss', 'suffering', 'rebirth', 'problems', 'resurrection', 'anger', 'damages', 'injury', 'vacancy', 'confusion', 'sin', 'separation', 'termination', 'protests', 'illness', 'public_outcry', 'by-election', 'damage', 'problem', 'vacancies', 'shock', 'blindness', 'peace', 'new_life', 'stress', 'great_sorrow', 'disease', 'anguish', 'feelings', 'events', 'war', 'violence', 'outpouring_of_grief', 'anxiety', 'civil_war', 'general_regret', 'fear', 'widespread_sorrow', 'outcry', 'issues', 'accident', 'change']
 # stress neighbors:  ['illness', 'depression', 'insomnia', 'health_problems', 'disease', 'headaches', 'problems', 'hair_loss', 'weight_gain', 'fatigue', 'pain', 'death', 'ulcers', 'symptoms', 'high_blood_pressure', 'diseases', 'anxiety', 'acne', 'condition', 'physical_symptoms', 'headache', 'illnesses', 'heart_attack', 'cancer', 'problem', 'burnout', 'diabetes', 'ibs', 'conditions', 'migraine', 'impotence', 'hypertension', 'heart_attacks', 'stomach_ulcers', 'migraines', 'mental_illness', 'heart_disease', 'sleeplessness', 'infertility', 'back_pain', 'damage', 'anger', 'muscle_tension', 'obesity', 'erectile_dysfunction', 'tension', 'injury', 'sickness', 'panic_attacks', 'miscarriage']
+
+
+
+
+# after Lem:
+# ============================================================
+# The graph has  11881187  nodes
+# The graph has  11499012  edges
+# -------------DEGREE-------------
+# node =  change  out-degree  15310  in-degree  14708
+# node =  event  out-degree  15190  in-degree  3598
+# node =  condition  out-degree  15160  in-degree  10165
+# node =  disease  out-degree  14726  in-degree  22667
+# node =  action  out-degree  11737  in-degree  4509
+# node =  stress  out-degree  10568  in-degree  9931
+# node =  problem  out-degree  10535  in-degree  78481
+# node =  injury  out-degree  10368  in-degree  24365
+# node =  infection  out-degree  9004  in-degree  10105
+# node =  accident  out-degree  8757  in-degree  12665
+# node =  war  out-degree  8062  in-degree  6454
+# node =  drug  out-degree  7972  in-degree  977
+# node =  incident  out-degree  7668  in-degree  2841
+# node =  work  out-degree  7138  in-degree  1501
+# node =  virus  out-degree  6856  in-degree  715
+# node =  mutation  out-degree  6549  in-degree  2140
+# node =  failure_to_do_so  out-degree  6369  in-degree  43
+# node =  climate_change  out-degree  5971  in-degree  2026
+# node =  death  out-degree  5891  in-degree  55388
+# node =  activity  out-degree  5797  in-degree  1797
+# node =  illness  out-degree  5604  in-degree  9957
+# node =  depression  out-degree  5568  in-degree  10769
+# node =  fire  out-degree  5317  in-degree  6448
+# node =  smoking  out-degree  5278  in-degree  569
+# node =  situation  out-degree  5049  in-degree  4270
+# node =  effort  out-degree  4927  in-degree  303
+# node =  bacteria  out-degree  4914  in-degree  1201
+# node =  global_warming  out-degree  4842  in-degree  2950
+# node =  attack  out-degree  4810  in-degree  2469
+# node =  error  out-degree  4735  in-degree  8732
+# node =  god  out-degree  4655  in-degree  651
+# node =  storm  out-degree  4644  in-degree  935
+# node =  failure  out-degree  4617  in-degree  9386
+# node =  earthquake  out-degree  4554  in-degree  2075
+# node =  damage  out-degree  4465  in-degree  34215
+# node =  obesity  out-degree  4323  in-degree  4303
+# node =  cancer  out-degree  4272  in-degree  11562
+# node =  conflict  out-degree  4265  in-degree  6439
+# node =  medication  out-degree  4247  in-degree  327
+# node =  success  out-degree  4204  in-degree  12126
+# node =  diabetes  out-degree  4196  in-degree  3110
+# node =  inflammation  out-degree  4170  in-degree  6602
+# node =  disorder  out-degree  4114  in-degree  4875
+# node =  alcohol  out-degree  4072  in-degree  441
+# node =  exposure  out-degree  4035  in-degree  1191
+# node =  trauma  out-degree  3958  in-degree  2095
+# node =  behavior  out-degree  3937  in-degree  3386
+# node =  aging  out-degree  3907  in-degree  1295
+# node =  development  out-degree  3783  in-degree  2249
+# node =  pain  out-degree  3745  in-degree  23228
+#
+#
+# node =  problem  in-degree  78481  out-degree  10535
+# node =  death  in-degree  55388  out-degree  5891
+# node =  damage  in-degree  34215  out-degree  4465
+# node =  injury  in-degree  24365  out-degree  10368
+# node =  pain  in-degree  23228  out-degree  3745
+# node =  disease  in-degree  22667  out-degree  14726
+# node =  increase  in-degree  17334  out-degree  2418
+# node =  cost  in-degree  15725  out-degree  1304
+# node =  loss  in-degree  14852  out-degree  3270
+# node =  change  in-degree  14708  out-degree  15310
+# node =  symptom  in-degree  14586  out-degree  2785
+# node =  confusion  in-degree  14362  out-degree  2220
+# node =  accident  in-degree  12665  out-degree  8757
+# node =  delay  in-degree  12281  out-degree  3548
+# node =  success  in-degree  12126  out-degree  4204
+# node =  cancer  in-degree  11562  out-degree  4272
+# node =  depression  in-degree  10769  out-degree  5568
+# node =  harm  in-degree  10492  out-degree  347
+# node =  condition  in-degree  10165  out-degree  15160
+# node =  infection  in-degree  10105  out-degree  9004
+# node =  illness  in-degree  9957  out-degree  5604
+# node =  stress  in-degree  9931  out-degree  10568
+# node =  failure  in-degree  9386  out-degree  4617
+# node =  trouble  in-degree  9248  out-degree  531
+# node =  error  in-degree  8732  out-degree  4735
+# node =  headache  in-degree  7918  out-degree  709
+# node =  complication  in-degree  7917  out-degree  2219
+# node =  difficulty  in-degree  7575  out-degree  1148
+# node =  anxiety  in-degree  7477  out-degree  3532
+# node =  side_effect  in-degree  7109  out-degree  1494
+# node =  violence  in-degree  7017  out-degree  2710
+# node =  destruction  in-degree  7001  out-degree  981
+# node =  health_problem  in-degree  6603  out-degree  873
+# node =  inflammation  in-degree  6602  out-degree  4170
+# node =  war  in-degree  6454  out-degree  8062
+# node =  fire  in-degree  6448  out-degree  5317
+# node =  conflict  in-degree  6439  out-degree  4265
+# node =  decline  in-degree  6406  out-degree  818
+# node =  discomfort  in-degree  6282  out-degree  606
+# node =  vulnerability  in-degree  6251  out-degree  622
+# node =  disaster  in-degree  5871  out-degree  2289
+# node =  decrease  in-degree  5825  out-degree  571
+# node =  suffering  in-degree  5678  out-degree  578
+# node =  growth  in-degree  5578  out-degree  2461
+# node =  crisis  in-degree  5244  out-degree  3003
+# node =  mortality  in-degree  5207  out-degree  575
+# node =  controversy  in-degree  5160  out-degree  1656
+# node =  fatigue  in-degree  5071  out-degree  1850
+# node =  disorder  in-degree  4875  out-degree  4114
+# node =  issue  in-degree  4872  out-degree  2217
+# death neighbors:  ['grief', 'pain', 'loss', 'sadness', 'life', 'depression', 'sorrow', 'financial_loss', 'suffering', 'rebirth', 'problem', 'resurrection', 'anger', 'damage', 'injury', 'vacancy', 'confusion', 'sin', 'separation', 'termination', 'protest', 'illness', 'public_outcry', 'by-election', 'shock', 'blindness', 'peace', 'new_life', 'stress', 'great_sorrow', 'disease', 'anguish', 'feeling', 'event', 'war', 'violence', 'outpouring_of_grief', 'anxiety', 'civil_war', 'general_regret', 'fear', 'widespread_sorrow', 'outcry', 'issue', 'accident', 'change', 'birth', 'complication', 'bleeding', 'succession_crisis']
+# stress neighbors:  ['illness', 'depression', 'insomnia', 'health_problem', 'disease', 'headache', 'problem', 'hair_loss', 'weight_gain', 'fatigue', 'pain', 'death', 'ulcer', 'symptom', 'high_blood_pressure', 'anxiety', 'acne', 'condition', 'physical_symptom', 'heart_attack', 'cancer', 'burnout', 'diabetes', 'ibs', 'migraine', 'impotence', 'hypertension', 'stomach_ulcer', 'mental_illness', 'heart_disease', 'sleeplessness', 'infertility', 'back_pain', 'damage', 'anger', 'muscle_tension', 'obesity', 'erectile_dysfunction', 'tension', 'injury', 'sickness', 'panic_attack', 'miscarriage', 'change', 'tension_headache', 'heart_problem', 'physical_illness', 'constipation', 'disorder', 'overeating']
