@@ -84,6 +84,7 @@ with open('causenet-full-without-NUL.tsv','r') as f:
 				else:
 					print ('this edge contains NUL!')
 
+		writer.writerow(['Cause', 'Effect', 'Weight'])
 		for (s_lemed, o_lemed) in map_edge_to_sum_weight.keys():
 			w_lemed = map_edge_to_sum_weight[(s_lemed, o_lemed)]
 			writer.writerow([s_lemed, o_lemed, w_lemed])
