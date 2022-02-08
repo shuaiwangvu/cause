@@ -8,9 +8,13 @@ import matplotlib.pyplot as plt
 import csv
 import nltk
 import csv
+import time
+
+
 
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import sent_tokenize, word_tokenize
@@ -31,14 +35,14 @@ def mylem (s):
 		s_lem = lemmatizer.lemmatize(s)
 	return s_lem
 
-
+start = time.time()
 ct_sources = Counter()
 ct_weight = Counter()
 ct_scc = Counter()
 count_0 = 0
 count = 0
 count_lemed = 0
-mapping = {}
+lem_mapping = {}
 map_edge_to_sum_weight = Counter()
 with open('causenet-full-without-NUL.tsv','r') as f:
 	with open( "causenet-full-without-NUL-lem.tsv", 'w') as output:
@@ -46,8 +50,9 @@ with open('causenet-full-without-NUL.tsv','r') as f:
 		for line in f.readlines():
 			count += 1
 			if count %100000 == 0:
-				# break
+
 				print ('processed: ', count)
+				# break
 
 			if '\0' in line:
 				print ('row ', count,' has NUL')
@@ -61,27 +66,48 @@ with open('causenet-full-without-NUL.tsv','r') as f:
 				o_lem = mylem(o)
 
 				if o_lem != o:
-					if o_lem in mapping.keys():
-						mapping[o_lem].append(o)
+					if o_lem  not in lem_mapping.keys():
+						lem_mapping[o_lem] = set()
+						lem_mapping[o_lem].add(o)
 					else:
-						mapping[o_lem] = [o]
+						lem_mapping[o_lem].add(o)
 
 				if s_lem != s:
-					if s_lem in mapping.keys():
-						mapping[s_lem].append(s)
+					if s_lem not in lem_mapping.keys():
+						lem_mapping[s_lem] = set()
+						lem_mapping[s_lem].add(s)
 					else:
-						mapping[s_lem] = [s]
+						lem_mapping[s_lem].add(s)
 
 				if '\0' not in s and '\0' not in o:
-
 					map_edge_to_sum_weight[(s_lem, o_lem)] += w
+				else:
+					print ('this edge contains NUL!')
 
-		for (s_lemed, o_lemed) in map_edge_to_sum_weight:
+		for (s_lemed, o_lemed) in map_edge_to_sum_weight.keys():
 			w_lemed = map_edge_to_sum_weight[(s_lemed, o_lemed)]
 			writer.writerow([s_lemed, o_lemed, w_lemed])
 
-print ('found ', count_0, ' lines with NUL')
-print ('found ', len(mapping.keys()), 'merged nodes from ', len (mapping.values()), ' original nodes')
+print ('I found ', count_0, ' lines with NUL')
+print ('I found ', len(lem_mapping.keys()), 'merged nodes from ', len (lem_mapping.values()), ' original nodes')
+
+
+# export this lem_mapping
+
+with open( "lem_mapping-lem.tsv", 'w') as output:
+	writer = csv.writer(output, delimiter='\t')
+	writer.writerow(['Lemmatized', 'Original'])
+	for k in lem_mapping.keys():
+		for v in lem_mapping[k]:
+			writer.writerow([k, v])
+
+
+
+end = time.time()
+hours, rem = divmod(end-start, 3600)
+minutes, seconds = divmod(rem, 60)
+time_formated = "{:0>2}:{:0>2}:{:05.2f}".format(int(hours), int(minutes), seconds)
+print ('time taken: ' + time_formated)
 
 # found  5574204 merged nodes from  5574204  original nodes
 
