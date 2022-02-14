@@ -14,7 +14,8 @@ count = 0
 g = nx.DiGraph()
 count_0 = 0
 count = 0
-filename_causenet_tsv = 'causenet-full-without-NUL.tsv'
+# filename_causenet_tsv = 'causenet-full-without-NUL.tsv'
+filename_causenet_tsv = 'causenet-full-without-NUL-lem.tsv'
 
 with open(filename_causenet_tsv,'r') as f:
 	for line in f.readlines():
@@ -46,3 +47,10 @@ for c in sccs:
 	ct_scc[len(c)] += 1
 
 print (ct_scc)
+
+
+# after lemmatize:
+# The graph has  11881463  nodes
+# The graph has  11501943  edges
+# the biggest scc has  203834 nodes
+# Counter({1: 11676142, 2: 719, 3: 15, 4: 1, 203834: 1})

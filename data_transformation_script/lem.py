@@ -42,10 +42,11 @@ ct_scc = Counter()
 count_0 = 0
 count = 0
 count_lemed = 0
+entities = set()
 lem_mapping = {}
 map_edge_to_sum_weight = Counter()
-with open('causenet-full-without-NUL.tsv','r') as f:
-	with open( "causenet-full-without-NUL-lem.tsv", 'w') as output:
+with open('../../data/causenet-precision-without-NUL.tsv','r') as f:
+	with open( "../../data/causenet-precision-without-NUL-lem.tsv", 'w') as output:
 		writer = csv.writer(output, delimiter='\t')
 		for line in f.readlines():
 			count += 1
@@ -86,16 +87,20 @@ with open('causenet-full-without-NUL.tsv','r') as f:
 
 		writer.writerow(['Cause', 'Effect', 'Weight'])
 		for (s_lemed, o_lemed) in map_edge_to_sum_weight.keys():
+			count_lemed+=1
+			entities.add(s_lemed)
+			entities.add(o_lemed)
 			w_lemed = map_edge_to_sum_weight[(s_lemed, o_lemed)]
 			writer.writerow([s_lemed, o_lemed, w_lemed])
 
+print ('count (not lemmed) = ', count)
+print ('count (lemmed) = ', count_lemed)
 print ('I found ', count_0, ' lines with NUL')
 print ('I found ', len(lem_mapping.keys()), 'merged nodes from ', len (lem_mapping.values()), ' original nodes')
-
-
+print ('# Entities ', len(entities))
 # export this lem_mapping
 
-with open( "lem_mapping-lem.tsv", 'w') as output:
+with open( "lem_mapping-precision.tsv", 'w') as output:
 	writer = csv.writer(output, delimiter='\t')
 	writer.writerow(['Lemmatized', 'Original'])
 	for k in lem_mapping.keys():

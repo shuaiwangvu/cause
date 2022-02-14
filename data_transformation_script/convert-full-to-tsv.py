@@ -29,19 +29,17 @@ import csv
 ct_sources = Counter()
 ct_weight = Counter()
 ct_scc = Counter()
-count_0 = 0
 count = 0
 # with open('causenet-full.jsonl', 'r') as json_file:
-with open( "../../data/causenet-precision.tsv", 'w') as output:
+with open( "causenet-full.tsv", 'w') as output:
 	writer = csv.writer(output, delimiter='\t')
-	with open('../../data/causenet-precision.jsonl', 'r') as json_file:
+	with open('causenet-precision.jsonl', 'r') as json_file:
 		json_list = list(json_file)
 		g = nx.DiGraph()
 		for json_str in json_list:
 			count += 1
-
-			if count % 1000 == 0:
-				print ('processing ', count)
+			print ('processing ', count)
+			# if count % 1000 == 0:
 			# 	# print ('Loaded: ', count)
 			# 	break
 			result = json.loads(json_str)
@@ -57,15 +55,14 @@ with open( "../../data/causenet-precision.tsv", 'w') as output:
 			# print('effect = ', o)
 			if '\0' not in s and '\0' not in o:
 				writer.writerow([s, o, num_sources])
-#
-#
-# print ('The graph has ', g.number_of_nodes(), ' nodes')
-# print ('The graph has ', g.number_of_edges(), ' edges')
-count_0 = 0
-count = 0
-entities = set()
-with open('../../data/causenet-precision.tsv','r') as f:
-	with open( "../../data/causenet-precision-without-NUL.tsv", 'w') as output:
+
+
+print ('The graph has ', g.number_of_nodes(), ' nodes')
+print ('The graph has ', g.number_of_edges(), ' edges')
+
+
+with open('causenet-full.tsv','r') as f:
+	with open( "causenet-full-without-NUL.tsv", 'w') as output:
 		writer = csv.writer(output, delimiter='\t')
 		for line in f.readlines():
 			count += 1
@@ -80,15 +77,9 @@ with open('../../data/causenet-precision.tsv','r') as f:
 				row = line.split('\t')
 				s = row[0]
 				o = row[1]
-				entities.add(s)
-				entities.add(o)
 				w = int(row[2])
 				if '\0' not in s and '\0' not in o:
-					writer.writerow([s, o, w])
-print ('found ', count_0, ' lines with NUL')
-print ('processed: ', count, ' lines')
-print ('# entities: ', len(entities))
-
+					writer.writerow([s, o, num_sources])
 
 #
 # for sc in ct_sources.keys():

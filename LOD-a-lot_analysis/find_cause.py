@@ -20,7 +20,7 @@ hdt = HDTDocument(PATH_LOD)
 g = nx.MultiDiGraph()
 relation_to_keyword = {}
 relation_to_numtriple = {}
-
+keyword_to_relation = {}
 
 keywords = ['cause', 'Cause', 'causes', 'Causes', 'causal relation','Causal relation',
  'affects','Affects', 'regulates', 'Regulates', 'Impacts', 'impacts',
@@ -33,6 +33,10 @@ for w in keywords:
 	for (s,p,o) in triples:
 		g.add_node(s)
 		relation_to_keyword[s] = w
+		if w in keyword_to_relation.keys():
+			keyword_to_relation[w].append(s)
+		else:
+			keyword_to_relation[w] = [s]
 
 size = 0
 
@@ -64,11 +68,24 @@ while size != g.nodes():
 				h.add_edge(str(m), str(n), rel='subPropertyOf')
 	g = nx.compose(g, h)
 
+count = 0
 print ('\n\nthere are in total ', len (g.nodes()), ' causal relations collected')
 for n in g.nodes():
 	s_triples, s_cardinality = hdt.search_triples("", n, "")
 	relation_to_numtriple[n] = s_cardinality
+	count +=  s_cardinality
+	keyword_to_relation['extra'] = []
 	if n in relation_to_keyword.keys():
-		print ('[', relation_to_keyword[n],'] ', n, ' --> ', s_cardinality)
+		if s_cardinality !=0:
+			print ('[', relation_to_keyword[n],'] ', n, ' --> ', s_cardinality)
+
 	else:
 		print ('[extra] ', n, ' --> ', s_cardinality)
+		keyword_to_relation['extra'].append(n)
+
+print ('=======')
+for w in keyword_to_relation.keys():
+	print (w, '->', len(keyword_to_relation[w]))
+print ('=======')
+print ('there are in total ', len (relation_to_keyword.keys()), ' relations found')
+print ('there are in total ', count, ' triples')
