@@ -5,13 +5,13 @@ from collections import Counter
 import networkx as nx
 
 strategy_cycle_sampling = 'S2'
-num_clause_limit = 4000
+num_clause_limit = 2000
 timeout = 1000 * 60
 edge_coverage = 1.5
 
 o = Optimize()
 o.set("timeout", timeout)
-print('timeout = ',timeout/1000/60, 'mins')
+print('SMT timeout = ',timeout/1000/60, 'mins')
 mode = '-w'
 
 # this method calls the SMT solver
@@ -44,7 +44,7 @@ def obtained_edges_to_remove_using_SMT (sg):
 
 		elif strategy_cycle_sampling == 'S2':
 		# strategy 2: focus on nodes: obtain a random pair and each l2r , r2l
-			collect_nodes_visited_set = set()
+			# collect_nodes_visited_set = set()
 			pct_covered = 0
 			while  count < num_clause_limit and pct_covered <= edge_coverage:  #
 				l = random.choice(list(sg.nodes()))
@@ -58,11 +58,11 @@ def obtained_edges_to_remove_using_SMT (sg):
 					c = l2r[:-1] + r2l[:-1]
 					# print ('l2r2l: ',c, flush=True)
 					collect_cycles.append(c)
-					collect_nodes_visited_set = collect_nodes_visited_set.union(set(c))
+					# collect_nodes_visited_set = collect_nodes_visited_set.union(set(c))
 					pct_covered += len (c) / sg.number_of_edges()
 					# print ('count = ', count , ' covers ', pct_covered)
 					count += 1
-	print ('this round we have ', len(collect_cycles), 'cycles')
+	# print ('this round we have ', len(collect_cycles), 'cycles')
 
 	o = Optimize()
 	o.set("timeout", timeout)
@@ -169,21 +169,22 @@ def refine_graph(h, nu_min):
 		# print ('this is round ', round)
 		round += 1
 		new_graphs_to_work_on = []
-		for g in graphs_obtained:
+		for gs in graphs_obtained:
 			# if g.number_of_nodes() > 200:
 			# 	print ('working on ', len (g))
-			edges_removed_by_SMT = obtained_edges_to_remove_using_SMT (g)
-			g.remove_edges_from(edges_removed_by_SMT)
-			sccs = nx.strongly_connected_components(g)
+			edges_removed_by_SMT = obtained_edges_to_remove_using_SMT (gs)
+			gs.remove_edges_from(edges_removed_by_SMT)
+			sccs = nx.strongly_connected_components(gs)
 			filter_sccs = [x for x in sccs if len(x)>1]
 			for s in filter_sccs:
 				# if g.number_of_nodes() > 200 and len (s) > 30:
 				# 	print ('\tit was decomposed to: ', len (s))
-				new_graphs_to_work_on.append(g.subgraph(s).copy())
-			print('round ', round , ' removes ', len(edges_removed_by_SMT))
+				new_graphs_to_work_on.append(gs.subgraph(s).copy())
+			# print('this subgraph removes ', len(edges_removed_by_SMT))
 			for (n,m) in edges_removed_by_SMT:
 				# all_removed_edges += edges_removed_by_SMT
 				all_removed_edges[(n,m)] = 'removed by SMT'
-
 		graphs_obtained = new_graphs_to_work_on
+
+	g.remove_edges_from(all_removed_edges.keys())
 	return (g, all_removed_edges)
