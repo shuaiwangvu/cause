@@ -98,14 +98,14 @@ core = nx.DiGraph()
 
 count = 0
 for k in s:
-	print (k)
-	print ('\thas centrality     : ',s[k])
-	print ('\thas degree         : ',g.degree(k))
-	print ('\thas weighted degree: ',g.degree(k, weight='weight'))
+
 	count += 1
-	core.add_node(k)
-	if count >= 5000:
-		break
+	if centrality[k] >= 0.0001:
+		print (k)
+		print ('\thas centrality     : ',s[k])
+		print ('\thas degree         : ',g.degree(k))
+		print ('\thas weighted degree: ',g.degree(k, weight='weight'))
+		core.add_node(k)
 
 core = g.subgraph(core.nodes())
 print ('the core graph has ', core.number_of_nodes(), ' nodes')
